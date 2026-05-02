@@ -10,6 +10,7 @@ export const getBooks = async () => {
     if (response.status === 200) {
       return response.data;
     } else {
+      console.error("HTTP error:", response.status, response.statusText);
       throw new Error(`HTTP ${response.status}: Could not fetch books`);
     }
   } catch (error) {
@@ -24,8 +25,10 @@ export const getBookByISBN = async (isbn) => {
     if (response.status === 200) {
       return response.data;
     } else if (response.status === 404) {
+      console.log("No book found for ISBN:", isbn);
       return null;
     } else {
+      console.error("HTTP error:", response.status, response.statusText);
       throw new Error(`HTTP ${response.status}: Could not fetch book by ISBN`);
     }
   } catch (error) {
@@ -39,7 +42,11 @@ export const getBooksByAuthor = async (author) => {
     const response = await axios.get(`${API_BASE}/books/author/${author}`);
     if (response.status === 200) {
       return response.data;
+    } else if (response.status === 404) {
+      console.log("No books found for author:", author);
+      return [];
     } else {
+      console.error("HTTP error:", response.status, response.statusText);
       throw new Error(`HTTP ${response.status}: Could not fetch books by author`);
     }
   } catch (error) {
@@ -53,7 +60,11 @@ export const getBooksByTitle = async (title) => {
     const response = await axios.get(`${API_BASE}/books/title/${title}`);
     if (response.status === 200) {
       return response.data;
+    } else if (response.status === 404) {
+      console.log("No books found for title:", title);
+      return [];
     } else {
+      console.error("HTTP error:", response.status, response.statusText);
       throw new Error(`HTTP ${response.status}: Could not fetch books by title`);
     }
   } catch (error) {
@@ -67,7 +78,11 @@ export const getBookReviews = async (isbn) => {
     const response = await axios.get(`${API_BASE}/books/${isbn}/review`);
     if (response.status === 200) {
       return response.data;
+    } else if (response.status === 404) {
+      console.log("No reviews found for ISBN:", isbn);
+      return [];
     } else {
+      console.error("HTTP error:", response.status, response.statusText);
       throw new Error(`HTTP ${response.status}: Could not fetch reviews`);
     }
   } catch (error) {
