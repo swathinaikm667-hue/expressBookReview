@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const API_BASE = "/api"; // or your full backend URL
+const API_BASE = "/api";
 
 export const getBooks = async () => {
   try {
@@ -23,8 +23,6 @@ export const getBookByISBN = async (isbn) => {
     const response = await axios.get(`${API_BASE}/books/${isbn}`);
     if (response.status === 200) {
       return response.data;
-    } else if (response.status === 404) {
-      throw new Error("Book not found.");
     } else {
       throw new Error(`HTTP ${response.status}: Could not fetch book by ISBN`);
     }
