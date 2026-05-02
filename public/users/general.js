@@ -1,62 +1,77 @@
 // public/users/general.js
 
-// Example Axios setup (you can define this at the top)
 import axios from "axios";
 
-// You will need your base URL (or relative path)
-const API_BASE = "/api";
+const API_BASE = "/api"; // or your full backend URL
 
-// 1. Get all books
 export const getBooks = async () => {
   try {
     const response = await axios.get(`${API_BASE}/books`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`HTTP ${response.status}: Could not fetch books`);
+    }
   } catch (error) {
-    console.error("Error fetching books:", error);
+    console.error("Error fetching books:", error.message);
     throw error;
   }
 };
 
-// 2. Get book by ISBN
 export const getBookByISBN = async (isbn) => {
   try {
     const response = await axios.get(`${API_BASE}/books/${isbn}`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else if (response.status === 404) {
+      throw new Error("Book not found.");
+    } else {
+      throw new Error(`HTTP ${response.status}: Could not fetch book by ISBN`);
+    }
   } catch (error) {
-    console.error("Error fetching book by ISBN:", error);
+    console.error("Error fetching book by ISBN:", error.message);
     throw error;
   }
 };
 
-// 3. Get books by author
 export const getBooksByAuthor = async (author) => {
   try {
     const response = await axios.get(`${API_BASE}/books/author/${author}`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`HTTP ${response.status}: Could not fetch books by author`);
+    }
   } catch (error) {
-    console.error("Error fetching books by author:", error);
+    console.error("Error fetching books by author:", error.message);
     throw error;
   }
 };
 
-// 4. Get books by title
 export const getBooksByTitle = async (title) => {
   try {
     const response = await axios.get(`${API_BASE}/books/title/${title}`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`HTTP ${response.status}: Could not fetch books by title`);
+    }
   } catch (error) {
-    console.error("Error fetching books by title:", error);
+    console.error("Error fetching books by title:", error.message);
     throw error;
   }
 };
 
-// 5. Get book reviews
 export const getBookReviews = async (isbn) => {
   try {
     const response = await axios.get(`${API_BASE}/books/${isbn}/review`);
-    return response.data;
+    if (response.status === 200) {
+      return response.data;
+    } else {
+      throw new Error(`HTTP ${response.status}: Could not fetch reviews`);
+    }
   } catch (error) {
-    console.error("Error fetching book reviews:", error);
+    console.error("Error fetching book reviews:", error.message);
     throw error;
   }
 };
